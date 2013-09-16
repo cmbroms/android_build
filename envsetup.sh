@@ -276,7 +276,7 @@ function addcompletions()
 
     local T dir f
 
-    dirs="sdk/bash_completion vendor/cm/bash_completion"
+    dirs="sdk/bash_completion vendor/cmb/bash_completion"
     for dir in $dirs; do
     if [ -d ${dir} ]; then
         for f in `/bin/ls ${dir}/[a-z]*.bash 2> /dev/null`; do
