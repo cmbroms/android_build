@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="libs/host"/>
-	<classpathentry kind="src" path="tools/droiddoc/test/generics/src"/>
-	<classpathentry kind="src" path="tools/droiddoc/test/stubs/expected"/>
-	<classpathentry kind="src" path="tools/droiddoc/test/stubs/src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
