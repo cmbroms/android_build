@@ -1,4 +1,5 @@
-# Copyright (C) 2008 The Android Open Source Project
+#
+# Copyright (C) 2013 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,13 +12,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-LOCAL_PATH := $(call my-dir)
-include $(CLEAR_VARS)
+# Set ART as the default runtime environment
 
-LOCAL_SRC_FILES := fs_config.c
-LOCAL_MODULE := fs_config
-LOCAL_STATIC_LIBRARIES := libselinux
-LOCAL_FORCE_STATIC_EXECUTABLE := true
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.dalvik.vm.lib=libart.so
 
-include $(BUILD_HOST_EXECUTABLE)
+include $(SRC_TARGET_DIR)/product/runtime_libart.mk

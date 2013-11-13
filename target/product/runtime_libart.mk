@@ -1,4 +1,5 @@
-# Copyright (C) 2008 The Android Open Source Project
+#
+# Copyright (C) 2013 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,13 +12,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-LOCAL_PATH := $(call my-dir)
-include $(CLEAR_VARS)
+# Provides a functioning ART environment without Android frameworks
 
-LOCAL_SRC_FILES := fs_config.c
-LOCAL_MODULE := fs_config
-LOCAL_STATIC_LIBRARIES := libselinux
-LOCAL_FORCE_STATIC_EXECUTABLE := true
+PRODUCT_PACKAGES += \
+        core-libart \
+        libart \
+        dex2oat \
+        oatdump
 
-include $(BUILD_HOST_EXECUTABLE)
+# host-only dependencies
+ifeq ($(WITH_HOST_DALVIK),true)
+    PRODUCT_PACKAGES += \
+        core-libart-hostdex
+endif
+
+# We currently don't suport DEX_PREOPT for art
+DEX_PREOPT_DEFAULT := nostripping
+
+include $(SRC_TARGET_DIR)/product/runtime_common.mk
