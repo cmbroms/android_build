@@ -109,6 +109,7 @@ class EdifyGenerator(object):
     self.script.append(self._WordWrap(cmd))
 
   def RunBackup(self, command):
+    self.script.append('package_extract_dir("system/addon.d", "/system/addon.d");')
     self.script.append('package_extract_file("system/bin/backuptool.sh", "/tmp/backuptool.sh");')
     self.script.append('package_extract_file("system/bin/backuptool.functions", "/tmp/backuptool.functions");')
     self.script.append('set_perm(0, 0, 0777, "/tmp/backuptool.sh");')
@@ -172,6 +173,11 @@ class EdifyGenerator(object):
     """Unpack a given directory from the OTA package into the given
     destination directory."""
     self.script.append('package_extract_dir("%s", "%s");' % (src, dst))
+
+  def CopyFile(self, src, dst):
+    """Copy a given file from the OTA package into the given
+    destination directory."""
+    self.script.append('package_extract_file("%s", "%s");' % (src, dst))
 
   def Comment(self, comment):
     """Write a comment into the update script."""
