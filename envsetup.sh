@@ -227,9 +227,6 @@ function set_stuff_for_environment()
     set_java_home
     setpaths
     set_sequence_number
-
-    # With this environment variable new GCC can apply colors to warnings/errors
-    export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 }
 
 function set_sequence_number()
@@ -859,12 +856,12 @@ function mmm()
                   GET-INSTALL-PATH) GET_INSTALL_PATH=$DIR;;
                   *) echo "No Android.mk in $DIR."; return 1;;
                 esac
-                fi
+            fi
         done
         if [ -n "$GET_INSTALL_PATH" ]; then
           ARGS=$GET_INSTALL_PATH
           MODULES=
-            fi
+        fi
         ONE_SHOT_MAKEFILE="$MAKEFILE" $MMM_MAKE -C $T -f build/core/main.mk $DASH_ARGS $MODULES $ARGS
     else
         echo "Couldn't locate the top of the tree.  Try setting TOP."
@@ -989,17 +986,17 @@ function pid()
         append='$'
         shift
     fi
-   local EXE="$1"
-   if [ "$EXE" ] ; then
+    local EXE="$1"
+    if [ "$EXE" ] ; then
         local PID=`adb shell ps \
             | tr -d '\r' \
             | \grep "$prepend$EXE$append" \
             | sed -e 's/^[^ ]* *\([0-9]*\).*$/\1/'`
-       echo "$PID"
-   else
+        echo "$PID"
+    else
         echo "usage: pid [--exact] <process name>"
 		return 255
-   fi
+    fi
 }
 
 # systemstack - dump the current stack trace of all threads in the system process
@@ -1030,24 +1027,24 @@ function stacks()
         # Determine whether the process is native
         if adb shell ls -l /proc/$PID/exe | grep -q /system/bin/app_process ; then
             # Dump stacks of Dalvik process
-        local TRACES=/data/anr/traces.txt
-        local ORIG=/data/anr/traces.orig
-        local TMP=/data/anr/traces.tmp
+            local TRACES=/data/anr/traces.txt
+            local ORIG=/data/anr/traces.orig
+            local TMP=/data/anr/traces.tmp
 
-        # Keep original traces to avoid clobbering
-        adb shell mv $TRACES $ORIG
+            # Keep original traces to avoid clobbering
+            adb shell mv $TRACES $ORIG
 
-        # Make sure we have a usable file
-        adb shell touch $TRACES
-        adb shell chmod 666 $TRACES
+            # Make sure we have a usable file
+            adb shell touch $TRACES
+            adb shell chmod 666 $TRACES
 
-        # Dump stacks and wait for dump to finish
-        adb shell kill -3 $PID
+            # Dump stacks and wait for dump to finish
+            adb shell kill -3 $PID
             adb shell notify $TRACES >/dev/null
 
-        # Restore original stacks, and show current output
-        adb shell mv $TRACES $TMP
-        adb shell mv $ORIG $TRACES
+            # Restore original stacks, and show current output
+            adb shell mv $TRACES $TMP
+            adb shell mv $ORIG $TRACES
             adb shell cat $TMP
         else
             # Dump stacks of native process
